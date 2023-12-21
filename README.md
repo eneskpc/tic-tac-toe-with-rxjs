@@ -1,2 +1,2 @@
-This is a way of being able to apply rxjs as a state management to the tic-tac-toe tutorial which is a react app.
+This is a way of applying RxJS as a state management to the React App Tic-Tac-Toe.
 For example, rxStore.ts can be moved any application where adopted the architecture microfrontend.
