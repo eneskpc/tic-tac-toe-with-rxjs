@@ -1,23 +1,11 @@
-import { useEffect, useState } from "react";
 import { historyStream } from "../rxStore";
+import { useObservable } from "./useObservable";
 
 export const useHistory = () => {
-  const [history, setHistory] = useState<string[][]>(historyStream.getValue());
-
-  useEffect(() => {
-    const historySub = historyStream.subscribe((history$) => {
-      setHistory(history$);
-    });
-
-    return () => {
-      historySub.unsubscribe();
-    };
-  }, []);
+  const [value, setValue] = useObservable(historyStream);
 
   return {
-    history,
-    setHistory: (newHistory: string[][]) => {
-      historyStream.next(newHistory);
-    },
+    history: value,
+    setHistory: setValue,
   };
 };
