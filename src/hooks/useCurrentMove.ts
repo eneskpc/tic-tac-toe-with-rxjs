@@ -1,25 +1,11 @@
-import { useEffect, useState } from "react";
 import { currentMoveStream } from "../rxStore";
+import { useObservable } from "./useObservable";
 
 export const useCurrentMove = () => {
-  const [currentMove, setCurrentMove] = useState<number>(
-    currentMoveStream.getValue()
-  );
-
-  useEffect(() => {
-    const currentMoveHub = currentMoveStream.subscribe((currentMove$) => {
-      setCurrentMove(currentMove$);
-    });
-
-    return () => {
-      currentMoveHub.unsubscribe();
-    };
-  }, []);
+  const [value, setValue] = useObservable(currentMoveStream);
 
   return {
-    currentMove,
-    setCurrentMove: (newCurrentMove: number) => {
-      currentMoveStream.next(newCurrentMove);
-    },
+    currentMove: value,
+    setCurrentMove: setValue,
   };
 };
